@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ledger — Smart Expense Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="page">
+
+    <header class="masthead">
+      <div class="masthead__mark">§</div>
+      <div class="masthead__text">
+        <h1>Ledger</h1>
+        <p>a quiet place to keep the books</p>
+      </div>
+      <div class="masthead__date" id="todayDate"></div>
+    </header>
+
+    <!-- Signature element: torn-edge receipt summary -->
+    <section class="receipt" aria-label="Balance summary">
+      <div class="receipt__inner">
+        <div class="receipt__row receipt__row--title">
+          <span>Statement</span>
+          <span id="statementRange">this month</span>
+        </div>
+
+        <div class="receipt__row">
+          <span>Money in</span>
+          <span class="mono amount amount--in" id="totalIncome">$0.00</span>
+        </div>
+        <div class="receipt__row">
+          <span>Money out</span>
+          <span class="mono amount amount--out" id="totalExpense">$0.00</span>
+        </div>
+
+        <div class="receipt__divider" aria-hidden="true"></div>
+
+        <div class="receipt__row receipt__row--balance">
+          <span>Balance</span>
+          <span class="mono" id="balance">$0.00</span>
+        </div>
+      </div>
+      <div class="receipt__teeth" aria-hidden="true"></div>
+    </section>
+
+    <main class="ledger-body">
+
+      <section class="panel" aria-label="Add a transaction">
+        <h2 class="panel__title">Add entry</h2>
+        <form id="entryForm" class="entry-form">
+          <div class="field field--wide">
+            <label for="desc">Description</label>
+            <input type="text" id="desc" placeholder="Coffee, rent, freelance payment…" required>
+          </div>
+
+          <div class="field">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required>
+          </div>
+
+          <div class="field">
+            <label for="type">Kind</label>
+            <select id="type">
+              <option value="expense">Expense</option>
+              <option value="income">Income</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="category">Category</label>
+            <select id="category">
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Housing</option>
+              <option>Utilities</option>
+              <option>Health</option>
+              <option>Shopping</option>
+              <option>Income</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="date">Date</label>
+            <input type="date" id="date" required>
+          </div>
+
+          <button type="submit" class="btn-record">Record it</button>
+        </form>
+      </section>
+
+      <section class="panel" aria-label="Spending by category">
+        <h2 class="panel__title">By category</h2>
+        <div id="categoryBars" class="category-bars"></div>
+      </section>
+
+      <section class="panel panel--wide" aria-label="Transaction history">
+        <div class="panel__head">
+          <h2 class="panel__title">Entries</h2>
+          <div class="chips" id="filterChips">
+            <button class="chip is-active" data-filter="all">All</button>
+            <button class="chip" data-filter="income">Income</button>
+            <button class="chip" data-filter="expense">Expense</button>
+          </div>
+        </div>
+
+        <div class="ledger-table" role="table">
+          <div class="ledger-table__head" role="row">
+            <span role="columnheader">Date</span>
+            <span role="columnheader">Description</span>
+            <span role="columnheader">Category</span>
+            <span role="columnheader" class="align-right">Amount</span>
+            <span role="columnheader" class="sr-only">Delete</span>
+          </div>
+          <div id="entries" class="ledger-table__body"></div>
+          <p id="emptyState" class="empty-state">No entries yet — the first line of the ledger is waiting.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="page-footer">
+      <p>Stored only in this browser. Nothing leaves your device.</p>
+      <button id="clearAll" class="btn-ghost">Clear all entries</button>
+    </footer>
+
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
